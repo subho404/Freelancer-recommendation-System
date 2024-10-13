@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Recommendation System</title>
+    <p>Devolped by Subham Biswas</p>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        /* Body Styles */
+        body {
+            font-family: Arial, sans-serif; /* Sets a clean, modern font */
+            background-color: #f4f4f4; /* Light grey background */
+            color: #333; /* Dark text color for readability */
+            line-height: 1.6; /* Improves readability */
+        }
+    
+        /* Header Styles */
+        header {
+            background: #007bff; /* Blue background for the header */
+            color: #fff; /* White text color */
+            padding: 20px; /* Adds padding around the header */
+            text-align: center; /* Centers the header text */
+        }
+    
+        /* Container Styles */
+        .container {
+            max-width: 600px; /* Sets a maximum width for the container */
+            margin: 20px auto; /* Centers the container horizontally */
+            padding: 20px; /* Adds padding inside the container */
+            background: #fff; /* White background for the content */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            text-align: center; /* Centers the text inside the container */
+        }
+    
+        /* Heading Styles */
+        h2 {
+            margin-bottom: 20px; /* Adds space below the heading */
+            font-size: 24px; /* Sets a larger font size */
+            color: #333; /* Dark color for the heading */
+        }
+    
+        /* Button Styles */
+        button {
+            padding: 15px 20px; /* Adds padding inside the buttons */
+            margin: 10px; /* Adds spacing between buttons */
+            border: none; /* Removes default border */
+            border-radius: 5px; /* Rounded corners */
+            font-size: 16px; /* Sets font size */
+            cursor: pointer; /* Changes cursor to pointer on hover */
+            transition: background 0.3s ease; /* Smooth transition for background color */
+        }
+    
+        /* Button Background Colors */
+        button[name="role"] {
+            background-color: #28a745; /* Green background for freelancer button */
+            color: white; /* White text color */
+        }
+    
+        button[name="role"]:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+    
+        button[name="role"]:nth-of-type(2) {
+            background-color: #007bff; /* Blue background for client button */
+        }
+    
+        button[name="role"]:nth-of-type(2):hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    
+        /* Developer Info */
+        p {
+            text-align: center; /* Centers the developer info */
+            margin: 20px 0; /* Adds vertical spacing */
+            color: #666; /* Grey color for the text */
+        }
+    
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .container {
+                width: 90%; /* Full width on smaller screens */
+                padding: 15px; /* Adjust padding */
+            }
+    
+            h2 {
+                font-size: 20px; /* Slightly smaller font size on small screens */
+            }
+    
+            button {
+                width: 100%; /* Full width buttons on small screens */
+                font-size: 14px; /* Slightly smaller font size for buttons */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Freelancer Recommendation System</h1>
+    </header>
+    <div class="container">
+        <h2>Are you a Freelancer or Looking for a Freelancer?</h2>
+        <form method="POST" action="/user-role">
+            <button type="submit" name="role" value="freelancer">I am a Freelancer</button>
+            <button type="submit" name="role" value="client">I am Looking for a Freelancer</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Project</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<style>
+    /* Basic Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    /* Body Styles */
+    body {
+        font-family: Arial, sans-serif; /* Sets a clean, modern font */
+        background-color: #f4f4f4; /* Light grey background */
+        color: #333; /* Dark text color for readability */
+        line-height: 1.6; /* Improves readability */
+    }
+    
+    /* Header Styles */
+    header {
+        background: #28a745; /* Green background for the header */
+        color: #fff; /* White text color */
+        padding: 20px; /* Adds padding around the header */
+        text-align: center; /* Centers the header text */
+    }
+    
+    /* Container Styles */
+    .container {
+        max-width: 500px; /* Sets a maximum width for the form container */
+        margin: 20px auto; /* Centers the container horizontally */
+        padding: 20px; /* Adds padding inside the container */
+        background: #fff; /* White background for the form */
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    }
+    
+    /* Form Styles */
+    form {
+        display: flex; /* Enables flexbox layout */
+        flex-direction: column; /* Stacks the form elements vertically */
+    }
+    
+    /* Input Styles */
+    input[type="text"], input[type="submit"] {
+        padding: 10px; /* Adds padding inside the input fields */
+        margin: 10px 0; /* Adds vertical spacing between inputs */
+        border: 1px solid #ccc; /* Light grey border */
+        border-radius: 4px; /* Rounded corners */
+        font-size: 16px; /* Increases font size for readability */
+    }
+    
+    /* Input Focus Styles */
+    input[type="text"]:focus {
+        border-color: #28a745; /* Changes border color on focus */
+        outline: none; /* Removes default outline */
+    }
+    
+    /* Submit Button Styles */
+    input[type="submit"] {
+        background: #28a745; /* Green color for button */
+        color: #fff; /* White text color on button */
+        cursor: pointer; /* Changes cursor to pointer on hover */
+        transition: background 0.3s ease; /* Smooth transition for background color */
+    }
+    
+    input[type="submit"]:hover {
+        background: #218838; /* Darker shade on hover */
+    }
+    
+    /* Link Styles */
+    a {
+        display: inline-block; /* Allows padding around the link */
+        margin-top: 20px; /* Adds space above the link */
+        text-decoration: none; /* Removes underline */
+        color: #28a745; /* Link color matching the button */
+    }
+    
+    a:hover {
+        text-decoration: underline; /* Underline on hover for better UX */
+    }
+    
+    /* Responsive Styles */
+    @media (max-width: 600px) {
+        .container {
+            width: 90%; /* Full width on smaller screens */
+            padding: 15px; /* Adjust padding */
+        }
+    
+        header {
+            padding: 15px; /* Adjust header padding */
+        }
+    
+        input[type="text"], input[type="submit"] {
+            font-size: 14px; /* Slightly smaller font size */
+        }
+    }
+</style>
+<body>
+    <header>
+        <h1>Add a Project</h1>
+    </header>
+    <div class="container">
+        <form method="POST" action="/add-project">
+            <input type="text" name="title" placeholder="Project Title" required>
+            <input type="text" name="skills" placeholder="Skills Required (comma separated)" required>
+            <input type="submit" value="Add Project">
+        </form>
+        <a href="/">Back</a>
+    </div>
+</body>
+</html>
