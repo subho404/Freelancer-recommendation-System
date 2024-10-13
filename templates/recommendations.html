@@ -93,7 +93,12 @@
         {% if freelancers %}
             <ul>
             {% for freelancer in freelancers %}
-                <li>Name: {{ freelancer.name }}, Skills: {{ freelancer.skills|join(', ') }}</li>
+                <li>
+                    <img src="{{ freelancer.profile_url }}" alt="{{ freelancer.name }}'s photo" width="100" height="100">
+                    Name: {{ freelancer.name }} <br>
+                    Email: <a href="mailto:{{ freelancer.email }}">{{ freelancer.email }}</a> <br>
+                    Skills: {{ freelancer.skills|join(', ') }}
+                </li>
             {% endfor %}
             </ul>
         {% else %}

@@ -1,33 +1,32 @@
 from pymongo import MongoClient
 
-# Connect to MongoDB
 client = MongoClient('mongodb://localhost:27017/')
 db = client['freelancer_db']
 freelancers_collection = db['freelancers']
 projects_collection = db['projects']
 
-# Function to add a freelancer
-def add_freelancer(name, skills):
+def add_freelancer(name, email, skills, profile_url):
     freelancer = {
         "name": name,
-        "skills": skills.split(',')
+        "email": email,
+        "skills": skills.split(','),
+        "profile_url": profile_url
     }
     freelancers_collection.insert_one(freelancer)
 
-# Function to get freelancers
 def get_freelancers():
     return list(freelancers_collection.find({}))
 
-# Function to add a project
-def add_project(project_id, title, skills):
+def add_project(title, skills):
+    project_id = f"project-{projects_collection.count_documents({}) + 1}"
     project = {
-        "_id": project_id,  # Use project_id as the unique identifier
+        "_id": project_id,
         "title": title,
         "skills": skills.split(',')
     }
     projects_collection.insert_one(project)
+    return project_id  # Return the project_id after adding
 
-# Function to get recommended freelancers based on project ID
 def get_recommended_freelancers(project_id):
     project = projects_collection.find_one({"_id": project_id})
     if project:
