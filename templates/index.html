@@ -2,106 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Freelancer Recommendation System</title>
-    <p>Devolped by Subham Biswas</p>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #e9ecef;
+        margin: 0;
+        padding: 20px;
+    }
     
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            line-height: 1.6;
-        }
+    h1 {
+        text-align: center;
+        color: #343a40;
+    }
     
-        header {
-            background: #007bff;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
+    form {
+        background: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: 20px auto;
+    }
     
-        .container {
-            max-width: 600px;
-            margin: 20px auto; 
-            padding: 20px; 
-            background: #fff; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
-            text-align: center; 
-        }
+    input[type="radio"] {
+        margin: 10px 0;
+    }
     
-        h2 {
-            margin-bottom: 20px; 
-            font-size: 24px;
-            color: #333; 
+    button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+    
+    .floating-text {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #28a745;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+    
+    @media (max-width: 600px) {
+        form {
+            padding: 15px;
         }
     
         button {
-            padding: 15px 20px; 
-            margin: 10px;
-            border: none; 
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s ease;
+            padding: 8px;
         }
-    
-        button[name="role"] {
-            background-color: #28a745;
-            color: white;
-        }
-    
-        button[name="role"]:hover {
-            background-color: #218838;
-        }
-    
-        button[name="role"]:nth-of-type(2) {
-            background-color: #007bff;
-        }
-    
-        button[name="role"]:nth-of-type(2):hover {
-            background-color: #0056b3;
-        }
-    
-        p {
-            text-align: center;
-            margin: 20px 0;
-            color: #666;
-        }
-    
-        @media (max-width: 600px) {
-            .container {
-                width: 90%;
-                padding: 15px;
-            }
-    
-            h2 {
-                font-size: 20px;
-            }
-    
-            button {
-                width: 100%;
-                font-size: 14px;
-            }
-        }
+    }
     </style>
-</head>
 <body>
-    <header>
-        <h1>Freelancer Recommendation System</h1>
-    </header>
-    <div class="container">
-        <h2>Are you a Freelancer or Looking for a Freelancer?</h2>
-        <form method="POST" action="/user-role">
-            <button type="submit" name="role" value="freelancer">I am a Freelancer</button>
-            <button type="submit" name="role" value="client">I am Looking for a Freelancer</button>
-        </form>
-    </div>
+    <div class="floating-text">Welcome to TechPirates</div>
+    <h1>Welcome to Freelancer Recommendation System</h1>
+    <form action="/user-role" method="POST">
+        <input type="radio" name="role" value="freelancer" required> I'm a Freelancer<br>
+        <input type="radio" name="role" value="client" required> I'm Looking for a Freelancer<br>
+        <button type="submit">Next</button>
+    </form>
 </body>
 </html>

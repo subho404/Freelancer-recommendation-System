@@ -3,108 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recommended Freelancers</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Freelancer Recommendation System</title>
 </head>
 <style>
-    /* Basic Reset */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    
-    /* Body Styles */
+
     body {
-        font-family: Arial, sans-serif; /* Sets a clean, modern font */
-        background-color: #f4f4f4; /* Light grey background */
-        color: #333; /* Dark text color for readability */
-        line-height: 1.6; /* Improves readability */
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
     }
     
-    /* Header Styles */
-    header {
-        background: #17a2b8; /* Teal background for the header */
-        color: #fff; /* White text color */
-        padding: 20px; /* Adds padding around the header */
-        text-align: center; /* Centers the header text */
+    h1 {
+        text-align: center;
+        color: #333;
     }
     
-    /* Container Styles */
-    .container {
-        max-width: 600px; /* Sets a maximum width for the container */
-        margin: 20px auto; /* Centers the container horizontally */
-        padding: 20px; /* Adds padding inside the container */
-        background: #fff; /* White background for the content */
-        border-radius: 8px; /* Rounded corners */
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    h2 {
+        color: #007bff;
+        margin-top: 20px;
     }
     
-    /* List Styles */
+    div {
+        background: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    
+    img {
+        border-radius: 50%;
+    }
+    
+    form {
+        margin-top: 10px;
+    }
+    
+    input[type="text"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    
+    button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    
+    button:hover {
+        background-color: #218838;
+    }
+    
     ul {
-        list-style-type: none; /* Removes bullet points */
-        padding: 0; /* Removes default padding */
+        list-style-type: none;
+        padding: 0;
     }
     
     li {
-        padding: 10px; /* Adds padding to each list item */
-        border-bottom: 1px solid #ddd; /* Light grey border below list items */
-    }
-    
-    li:last-child {
-        border-bottom: none; /* Removes the border from the last item */
-    }
-    
-    /* No Freelancers Message */
-    p {
-        text-align: center; /* Centers the message */
-        margin: 20px 0; /* Adds vertical spacing around the message */
-    }
-    
-    /* Link Styles */
-    a {
-        display: inline-block; /* Allows padding around the link */
-        margin-top: 20px; /* Adds space above the link */
-        text-decoration: none; /* Removes underline */
-        color: #17a2b8; /* Link color matching the header */
-    }
-    
-    a:hover {
-        text-decoration: underline; /* Underline on hover for better UX */
-    }
-    
-    /* Responsive Styles */
-    @media (max-width: 600px) {
-        .container {
-            width: 90%; /* Full width on smaller screens */
-            padding: 15px; /* Adjust padding */
-        }
-    
-        header {
-            padding: 15px; /* Adjust header padding */
-        }
+        margin: 10px 0;
+        padding: 10px;
+        background: #fff;
+        border-radius: 5px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
     }
 </style>
 <body>
-    <header>
-        <h1>Recommended Freelancers</h1>
-    </header>
-    <div class="container">
-        {% if freelancers %}
-            <ul>
-            {% for freelancer in freelancers %}
-                <li>
-                    <img src="{{ freelancer.profile_url }}" alt="{{ freelancer.name }}'s photo" width="100" height="100">
-                    Name: {{ freelancer.name }} <br>
-                    Email: <a href="mailto:{{ freelancer.email }}">{{ freelancer.email }}</a> <br>
-                    Skills: {{ freelancer.skills|join(', ') }}
-                </li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            <p>No freelancers found.</p>
-        {% endif %}
-        <a href="/">Back</a>
+    <h1>Freelancer Recommendations for Project: {{ project_title }}</h1>
+
+    <!-- Top Freelancer Section -->
+    {% if top_freelancer %}
+    <h2>Top Recommended Freelancer</h2>
+    <div>
+        <img src="{{ top_freelancer.profile_url }}" alt="Profile Picture" width="100" height="100">
+        <b>{{ top_freelancer.name }}</b><br>
+        Email: {{ top_freelancer.email }}<br>
+        Skills: {{ ', '.join(top_freelancer.skills) }}<br>
+        Experience: {{ top_freelancer.experience_level }}<br>
+        <form method="POST" action="/contact-freelancer">
+            <input type="hidden" name="freelancer_email" value="{{ top_freelancer.email }}">
+            <input type="hidden" name="project_title" value="{{ project_title }}">
+            Message: <input type="text" name="message" required><br>
+            <button type="submit">Contact</button>
+        </form>
     </div>
+    {% else %}
+    <p>No top freelancer found with the required skills.</p>
+    {% endif %}
+
+    <!-- Other Freelancers Section -->
+    {% if other_freelancers %}
+    <h2>Other Available Freelancers</h2>
+    <ul>
+        {% for freelancer in other_freelancers %}
+            <li>
+                <img src="{{ freelancer.profile_url }}" alt="Profile Picture" width="50" height="50">
+                <b>{{ freelancer.name }}</b><br>
+                Email: {{ freelancer.email }}<br>
+                Skills: {{ ', '.join(freelancer.skills) }}<br>
+                Experience: {{ freelancer.experience_level }}<br>
+                <form method="POST" action="/contact-freelancer">
+                    <input type="hidden" name="freelancer_email" value="{{ freelancer.email }}">
+                    <input type="hidden" name="project_title" value="{{ project_title }}">
+                    Message: <input type="text" name="message" required><br>
+                    <button type="submit">Contact</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No other freelancers found with the required skills.</p>
+    {% endif %}
 </body>
+
 </html>

@@ -1,10 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Project</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <style>
     * {
@@ -15,93 +12,90 @@
     
     body {
         font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        color: #333;
+        background-color: #e9ecef;
+        color: #343a40;
         line-height: 1.6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
     }
     
-    header {
-        background: #28a745;
-        color: #fff;
-        padding: 20px;
+    h1 {
+        margin-bottom: 30px;
         text-align: center;
-    }
-    
-    .container {
-        max-width: 500px;
-        margin: 20px auto;
-        padding: 20px;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        font-size: 2.5em;
+        color: #007bff;
     }
     
     form {
-        display: flex;
-        flex-direction: column;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 450px;
+        text-align: left;
     }
     
-    input[type="text"], input[type="submit"] {
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    
+    input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        transition: border-color 0.3s;
     }
     
     input[type="text"]:focus {
-        border-color: #28a745;
+        border-color: #007bff;
         outline: none;
     }
     
-    input[type="submit"] {
-        background: #28a745;
-        color: #fff;
+    button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
         cursor: pointer;
-        transition: background 0.3s ease;
+        font-size: 18px;
+        transition: background-color 0.3s, transform 0.2s;
     }
     
-    input[type="submit"]:hover {
-        background: #218838;
+    button:hover {
+        background-color: #0056b3;
+        transform: translateY(-1px);
     }
     
-    a {
-        display: inline-block;
-        margin-top: 20px;
-        text-decoration: none;
-        color: #28a745;
-    }
-    
-    a:hover {
-        text-decoration: underline;
+    button:active {
+        transform: translateY(0);
     }
     
     @media (max-width: 600px) {
-        .container {
-            width: 90%;
-            padding: 15px;
+        body {
+            padding: 10px;
         }
     
-        header {
-            padding: 15px;
-        }
-    
-        input[type="text"], input[type="submit"] {
-            font-size: 14px;
+        form {
+            padding: 20px;
         }
     }
 </style>
 <body>
-    <header>
-        <h1>Add a Project</h1>
-    </header>
-    <div class="container">
-        <form method="POST" action="/add-project">
-            <input type="text" name="title" placeholder="Project Title" required>
-            <input type="text" name="skills" placeholder="Skills Required (comma separated)" required>
-            <input type="submit" value="Add Project">
-        </form>
-        <a href="/">Back</a>
-    </div>
+    <h1>Add Project</h1>
+    <form method="POST">
+        Title: <input type="text" name="title" required><br>
+        Required Skills (comma separated): <input type="text" name="skills" required><br>
+        <button type="submit">Add Project</button>
+    </form>
 </body>
 </html>

@@ -1,55 +1,98 @@
 from flask import Flask, render_template, request, redirect, url_for
-from werkzeug.utils import secure_filename
+from pymongo import MongoClient
+from ml_model import recommend_freelancers
 import os
-from database import get_freelancers, add_freelancer, get_recommended_freelancers, add_project, projects_collection
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
 
-UPLOAD_FOLDER = 'static/uploads/'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+# MongoDB Setup
+client = MongoClient('mongodb://localhost:27017/')
+db = client['freelancer_db']
+freelancers_collection = db['freelancers']
+projects_collection = db['projects']
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def home():
+    return redirect(url_for('user_role'))
 
-@app.route('/user-role', methods=['POST'])
+@app.route('/user-role', methods=['GET', 'POST'])
 def user_role():
-    role = request.form['role']
-    if role == 'freelancer':
-        return render_template('add_freelancer.html')
-    else:
-        return render_template('add_project.html')
+    if request.method == 'POST':
+        role = request.form['role']
+        if role == 'freelancer':
+            return redirect(url_for('add_freelancer_route'))
+        else:
+            return redirect(url_for('add_project_route'))
+    return render_template('user_role.html')
 
-@app.route('/add-freelancer', methods=['POST'])
+@app.route('/add_freelancer', methods=['GET', 'POST'])
 def add_freelancer_route():
-    name = request.form['name']
-    email = request.form['email']
-    skills = request.form['skills']
-    profile_picture = request.files['profile_picture']
-    
-    if profile_picture:
-        filename = secure_filename(profile_picture.filename)
-        profile_picture.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        profile_url = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    else:
-        profile_url = None
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        skills = request.form['skills'].split(',')
+        experience_level = request.form['experience_level']
+        profile_picture = request.files['profile_picture']
 
-    add_freelancer(name, email, skills, profile_url)
-    return redirect('/')
+        freelancer = {
+            'name': name,
+            'email': email,
+            'skills': [skill.strip() for skill in skills],
+            'experience_level': experience_level,
+            'profile_url': f"/static/uploads/{profile_picture.filename}"
+        }
 
-@app.route('/add-project', methods=['POST'])
+        
+        profile_picture.save(os.path.join(app.config['UPLOAD_FOLDER'], profile_picture.filename))
+        freelancers_collection.insert_one(freelancer)
+
+        return redirect(url_for('home'))
+    return render_template('add_freelancer.html')
+
+@app.route('/add_project', methods=['GET', 'POST'])
 def add_project_route():
-    title = request.form['title']
-    skills = request.form['skills']
-    project_id = add_project(title, skills)  # Get the project_id when adding
-    recommended_freelancers = get_recommended_freelancers(project_id)
-    return render_template('recommendations.html', freelancers=recommended_freelancers)
+    if request.method == 'POST':
+        title = request.form['title']
+        skills = request.form['skills'].split(',')
 
-@app.route('/recommend_freelancers', methods=['POST'])
-def recommend_freelancers():
-    project_id = request.form['project_id']
-    recommended_freelancers = get_recommended_freelancers(project_id)
-    return render_template('recommendations.html', freelancers=recommended_freelancers)
+        project_id = f"project-{projects_collection.count_documents({}) + 1}"
+        new_project = {
+            'project_id': project_id,
+            'title': title,
+            'skills': [skill.strip() for skill in skills]
+        }
+
+        projects_collection.insert_one(new_project)
+
+        
+        freelancers = list(freelancers_collection.find({}))
+
+       
+        recommended_freelancers = recommend_freelancers(freelancers, new_project['skills'])
+
+        if recommended_freelancers:
+            top_freelancer = recommended_freelancers[0] 
+            other_freelancers = recommended_freelancers[1:]  
+        else:
+            top_freelancer = None
+            other_freelancers = []
+
+        return render_template('recommendations.html', top_freelancer=top_freelancer, other_freelancers=other_freelancers, project_title=title)
+
+    return render_template('add_project.html')
+
+
+@app.route('/contact-freelancer', methods=['POST'])
+def contact_freelancer_route():
+    freelancer_email = request.form['freelancer_email']
+    project_title = request.form['project_title']
+    message = request.form['message']
+
+    
+    print(f"Contacting {freelancer_email} regarding project {project_title} with message: {message}")
+
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Role</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #e9ecef;
+        margin: 0;
+        padding: 20px;
+        position: relative;
+    }
+    
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    
+    form {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    
+    button {
+        background-color: #007bff;
+        color: white;
+        padding: 15px 25px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 0 10px;
+        font-size: 16px;
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+    
+    .floating-text {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.8);
+        padding: 10px 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        font-size: 18px;
+        color: #333;
+    }
+</style>
+<body>
+    <div class="floating-text">Welcome to TechPirates</div>
+    <br>
+    <br>
+    <hr>
+    <h1>Select Role</h1>
+    <form method="POST">
+        <button name="role" value="freelancer">I am a Freelancer</button>
+        <button name="role" value="employer">I am an Employer</button>
+    </form>
+</body>
+</html>

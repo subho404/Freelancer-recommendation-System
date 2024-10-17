@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Successfully Added</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Project Added Successfully!</h1>
+        <p>Your project <strong>{{ project_title }}</strong> has been successfully added to our system.</p>
+        <p><strong>Project ID:</strong> {{ project_id }}</p>
+        <p>Based on your project skills, we have automatically recommended the following freelancers:</p>
+        
+        <ul>
+        {% for freelancer in freelancers %}
+            <li>
+                <img src="{{ freelancer.profile_url }}" alt="Profile Picture" width="100px"><br>
+                <strong>{{ freelancer.name }}</strong><br>
+                Email: {{ freelancer.email }}<br>
+                Skills: {{ ', '.join(freelancer.skills) }}<br>
+                Experience Level: {{ freelancer.experience_level }}<br>
+                <form action="/contact-freelancer" method="POST">
+                    <input type="hidden" name="freelancer_email" value="{{ freelancer.email }}">
+                    <input type="hidden" name="project_title" value="{{ project_title }}">
+                    <textarea name="message" placeholder="Send a message..."></textarea><br>
+                    <button type="submit">Contact Freelancer</button>
+                </form>
+            </li>
+        {% endfor %}
+        </ul>
+
+        <a href="/">Return to Home</a>
+    </div>
+</body>
+</html>
